@@ -12,21 +12,22 @@ Projeto de análise exploratória do catálogo da Netflix utilizando Python e Pa
 ## Estrutura do projeto
 
 ```text
-NETFLIX/
+netflix-analysis/
 │
 ├── data/
 │   └── netflix_titles.csv
 │
 ├── notebooks/
-│   ├── etl.ipynb
 │   └── data_analytics.ipynb
 │
 ├── src/
 │   ├── extract.py
-│   └── cleaning.py
+│   ├── cleaning.py
+│   └── feature_engineering.py
 │
-├── requirements.txt
-└── README.md
+├── README.md
+│
+└── requirements.txt
 ```
 
 ## Principais etapas realizadas
