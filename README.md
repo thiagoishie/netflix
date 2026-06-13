@@ -58,6 +58,28 @@ O conjunto de dados utilizado contém informações sobre filmes e séries dispo
 * Investigar padrões relacionados a gêneros, classificações indicativas e evolução do catálogo ao longo do tempo.
 
 
+
+## Colunas e descrições do dataset
+
+| **Coluna**       | **Descrição**                                                                           |
+|------------------|-----------------------------------------------------------------------------------------|
+| show_id          | Identificador único da obra no catálogo                                                 |
+| type             | Tipo de título (por exemplo: Movie, TV Show)                                            |
+| title            | Nome do filme ou série                                                                  |
+| director         | Nome(s) do(s) diretor(es); pode conter múltiplos nomes separados por vírgula            |
+| cast             | Principais atores/atrizes; lista separada por vírgulas                                  |
+| country          | País(es) de produção ou origem; pode listar múltiplos países                            |
+| date_added       | Data em que a obra foi adicionada ao catálogo (formato: mês dia, ano)                   |
+| release_year     | Ano de lançamento original da obra                                                      |
+| rating           | Classificação indicativa (ex.: PG-13, TV-MA, etc.)                                      |
+| duration         | Duração do conteúdo (minutos para filmes; número de temporadas/episódios para séries)   |
+| listed_in        | Gêneros ou categorias (ex.: Comedies; Documentaries)                                    |
+| description      | Sinopse curta ou resumo do enredo                                                       |
+| language         | Idioma principal da obra (quando disponível)                                            |
+| production_company | Empresa(s) produtora(s) (quando disponível)                                           |
+| imdb_id          | Identificador na base externa IMDB (quando disponível)                                  |
+
+
 ## Feature Engieneering
 
 ### Rating
@@ -104,3 +126,77 @@ O conjunto de dados utilizado contém informações sobre filmes e séries dispo
 | **Asia** | Afghanistan, Bangladesh, Cambodia, China, Hong Kong, India, Indonesia, Iran, Iraq, Israel, Japan, Jordan, Kazakhstan, Kuwait, Lebanon, Malaysia, Mongolia, Nepal, Pakistan, Philippines, Saudi Arabia, Singapore, South Korea, Sri Lanka, Syria, Taiwan, Thailand, United Arab Emirates, Vietnam |
 | **Oceania** | Australia, New Zealand |
 | **Unknown** | Unknown |
+
+## 🗣️ Language Mapping
+
+| Language | Countries |
+|-----------|------------|
+| **English** | United States, Canada, Jamaica, Ireland, United Kingdom, Botswana, Ghana, Kenya, Malawi, Namibia, Nigeria, Singapore, South Africa, Uganda, Zimbabwe, Australia, New Zealand |
+| **Spanish** | Mexico, Costa Rica, Cuba, Dominican Republic, El Salvador, Guatemala, Honduras, Nicaragua, Panama, Puerto Rico, Argentina, Bolivia, Chile, Colombia, Ecuador, Paraguay, Peru, Uruguay, Venezuela, Spain |
+| **Portuguese** | Brazil, Portugal, Angola |
+| **French** | France, Belgium, Luxembourg, Burkina Faso, Cameroon, Congo, Mauritius, Senegal |
+| **German** | Austria, Germany, Switzerland |
+| **Arabic** | Algeria, Egypt, Morocco, Sudan, Tunisia, Iraq, Jordan, Kuwait, Lebanon, Saudi Arabia, Syria, United Arab Emirates |
+| **Mandarin** | China, Taiwan |
+| **Dutch** | Netherlands |
+| **Bulgarian** | Bulgaria |
+| **Croatian** | Croatia |
+| **Greek** | Cyprus, Greece |
+| **Czech** | Czech Republic |
+| **Danish** | Denmark |
+| **Finnish** | Finland |
+| **Hungarian** | Hungary |
+| **Icelandic** | Iceland |
+| **Italian** | Italy |
+| **Norwegian** | Norway |
+| **Polish** | Poland |
+| **Romanian** | Romania |
+| **Russian** | Russia |
+| **Serbian** | Serbia |
+| **Slovak** | Slovakia |
+| **Slovene** | Slovenia |
+| **Swedish** | Sweden |
+| **Turkish** | Turkey |
+| **Ukrainian** | Ukraine |
+| **Amharic** | Ethiopia |
+| **Dari** | Afghanistan |
+| **Bengali** | Bangladesh |
+| **Khmer** | Cambodia |
+| **Cantonese** | Hong Kong |
+| **Hindi** | India |
+| **Indonesian** | Indonesia |
+| **Persian** | Iran |
+| **Hebrew** | Israel |
+| **Japanese** | Japan |
+| **Kazakh** | Kazakhstan |
+| **Malay** | Malaysia |
+| **Mongolian** | Mongolia |
+| **Nepali** | Nepal |
+| **Urdu** | Pakistan |
+| **Filipino** | Philippines |
+| **Korean** | South Korea |
+| **Sinhala** | Sri Lanka |
+| **Thai** | Thailand |
+| **Vietnamese** | Vietnam |
+| **Unknown** | Unknown |
+
+## 🎭 Genre Mapping
+
+| Final Genre | Original Genres |
+|-------------|-----------------|
+| **Drama** | Dramas, TV Dramas |
+| **Comedy** | Comedies, TV Comedies, Stand-Up Comedy, Stand-Up Comedy & Talk Shows |
+| **Action & Adventure** | Action & Adventure, TV Action & Adventure |
+| **Documentary** | Documentaries, Docuseries |
+| **Horror** | Horror Movies, TV Horror |
+| **Crime** | Crime TV Shows, Thrillers |
+| **International** | International Movies, International TV Shows |
+| **Family** | Children & Family Movies, Kids' TV |
+| **TV Shows** | British TV Shows, Classic & Cult TV |
+| **Reality** | Reality TV |
+| **Romance** | Romantic Movies, Romantic TV Shows |
+| **Anime** | Anime Features, Anime Series |
+| **Sci-Fi & Fantasy** | Sci-Fi & Fantasy, TV Sci-Fi & Fantasy |
+| **Music** | Music & Musicals |
+| **Sports** | Sports Movies |
+| **Other** | Classic Movies, Cult Movies, Independent Movies, LGBTQ Movies, Movies, Spanish-Language TV Shows |

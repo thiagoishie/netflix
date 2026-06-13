@@ -46,7 +46,8 @@ def create_main_country(df: pd.DataFrame) -> pd.DataFrame:
 
 def create_continent(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Classifica o país principal da produção em continentes/regiões.
+    Extrai o primeiro país informado na coluna country,
+    assumindo-o como país principal da produção.
     """
 
     df = df.copy()
@@ -180,6 +181,149 @@ def create_continent(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+def create_language(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Define a principal língua da obra com base no país principal
+    de produção (main_country).
+    """
+
+    df = df.copy()
+
+    language_mapping = {
+
+        # North America
+        'United States': 'English',
+        'Canada': 'English',
+        'Mexico': 'Spanish',
+
+        # Central America
+        'Costa Rica': 'Spanish',
+        'Cuba': 'Spanish',
+        'Dominican Republic': 'Spanish',
+        'El Salvador': 'Spanish',
+        'Guatemala': 'Spanish',
+        'Honduras': 'Spanish',
+        'Jamaica': 'English',
+        'Nicaragua': 'Spanish',
+        'Panama': 'Spanish',
+        'Puerto Rico': 'Spanish',
+
+        # South America
+        'Argentina': 'Spanish',
+        'Bolivia': 'Spanish',
+        'Brazil': 'Portuguese',
+        'Chile': 'Spanish',
+        'Colombia': 'Spanish',
+        'Ecuador': 'Spanish',
+        'Paraguay': 'Spanish',
+        'Peru': 'Spanish',
+        'Uruguay': 'Spanish',
+        'Venezuela': 'Spanish',
+
+        # Europe
+        'Austria': 'German',
+        'Belgium': 'French',
+        'Bulgaria': 'Bulgarian',
+        'Croatia': 'Croatian',
+        'Cyprus': 'Greek',
+        'Czech Republic': 'Czech',
+        'Denmark': 'Danish',
+        'Finland': 'Finnish',
+        'France': 'French',
+        'Germany': 'German',
+        'Greece': 'Greek',
+        'Hungary': 'Hungarian',
+        'Iceland': 'Icelandic',
+        'Ireland': 'English',
+        'Italy': 'Italian',
+        'Luxembourg': 'French',
+        'Netherlands': 'Dutch',
+        'Norway': 'Norwegian',
+        'Poland': 'Polish',
+        'Portugal': 'Portuguese',
+        'Romania': 'Romanian',
+        'Russia': 'Russian',
+        'Serbia': 'Serbian',
+        'Slovakia': 'Slovak',
+        'Slovenia': 'Slovene',
+        'Spain': 'Spanish',
+        'Sweden': 'Swedish',
+        'Switzerland': 'German',
+        'Turkey': 'Turkish',
+        'Ukraine': 'Ukrainian',
+        'United Kingdom': 'English',
+
+        # Africa
+        'Algeria': 'Arabic',
+        'Angola': 'Portuguese',
+        'Botswana': 'English',
+        'Burkina Faso': 'French',
+        'Cameroon': 'French',
+        'Congo': 'French',
+        'Egypt': 'Arabic',
+        'Ethiopia': 'Amharic',
+        'Ghana': 'English',
+        'Kenya': 'English',
+        'Malawi': 'English',
+        'Mauritius': 'French',
+        'Morocco': 'Arabic',
+        'Namibia': 'English',
+        'Nigeria': 'English',
+        'Senegal': 'French',
+        'South Africa': 'English',
+        'Sudan': 'Arabic',
+        'Tunisia': 'Arabic',
+        'Uganda': 'English',
+        'Zimbabwe': 'English',
+
+        # Asia
+        'Afghanistan': 'Dari',
+        'Bangladesh': 'Bengali',
+        'Cambodia': 'Khmer',
+        'China': 'Mandarin',
+        'Hong Kong': 'Cantonese',
+        'India': 'Hindi',
+        'Indonesia': 'Indonesian',
+        'Iran': 'Persian',
+        'Iraq': 'Arabic',
+        'Israel': 'Hebrew',
+        'Japan': 'Japanese',
+        'Jordan': 'Arabic',
+        'Kazakhstan': 'Kazakh',
+        'Kuwait': 'Arabic',
+        'Lebanon': 'Arabic',
+        'Malaysia': 'Malay',
+        'Mongolia': 'Mongolian',
+        'Nepal': 'Nepali',
+        'Pakistan': 'Urdu',
+        'Philippines': 'Filipino',
+        'Saudi Arabia': 'Arabic',
+        'Singapore': 'English',
+        'South Korea': 'Korean',
+        'Sri Lanka': 'Sinhala',
+        'Syria': 'Arabic',
+        'Taiwan': 'Mandarin',
+        'Thailand': 'Thai',
+        'United Arab Emirates': 'Arabic',
+        'Vietnam': 'Vietnamese',
+
+        # Oceania
+        'Australia': 'English',
+        'New Zealand': 'English',
+
+        # Unknown
+        'Unknown': 'Unknown'
+    }
+
+    df['language'] = (
+        df['main_country']
+        .map(language_mapping)
+        .fillna('Unknown')
+        .astype('category')
+    )
+
+    return df
+
 def create_date_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     Cria variáveis derivadas da data de adição ao catálogo.
@@ -197,12 +341,82 @@ def create_date_features(df: pd.DataFrame) -> pd.DataFrame:
 
 def create_genre(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Extrai o primeiro gênero informado na coluna listed_in,
-    assumindo-o como gênero principal da obra.
+    Extrai o primeiro gênero informado na coluna listed_in e o
+    agrupa em categorias mais amplas.
     """
 
     df = df.copy()
 
-    df['genre'] = (df['listed_in'].str.split(',').str[0].str.strip().astype('category'))
+    genre_mapping = {
+
+        # Drama
+        'Dramas': 'Drama',
+        'TV Dramas': 'Drama',
+
+        # Comedy
+        'Comedies': 'Comedy',
+        'TV Comedies': 'Comedy',
+        'Stand-Up Comedy': 'Comedy',
+        'Stand-Up Comedy & Talk Shows': 'Comedy',
+
+        # Action
+        'Action & Adventure': 'Action & Adventure',
+        'TV Action & Adventure': 'Action & Adventure',
+
+        # Documentary
+        'Documentaries': 'Documentary',
+        'Docuseries': 'Documentary',
+
+        # Horror
+        'Horror Movies': 'Horror',
+        'TV Horror': 'Horror',
+
+        # Crime
+        'Crime TV Shows': 'Crime',
+        'Thrillers': 'Crime',
+
+        # International
+        'International Movies': 'International',
+        'International TV Shows': 'International',
+
+        # Family
+        'Children & Family Movies': 'Family',
+        "Kids' TV": 'Family',
+
+        # TV Shows
+        'British TV Shows': 'TV Shows',
+        'Classic & Cult TV': 'TV Shows',
+
+        # Reality
+        'Reality TV': 'Reality',
+
+        # Romance
+        'Romantic Movies': 'Romance',
+        'Romantic TV Shows': 'Romance',
+
+        # Anime
+        'Anime Features': 'Anime',
+        'Anime Series': 'Anime',
+
+        # Sci-Fi
+        'Sci-Fi & Fantasy': 'Sci-Fi & Fantasy',
+        'TV Sci-Fi & Fantasy': 'Sci-Fi & Fantasy',
+
+        # Music
+        'Music & Musicals': 'Music',
+
+        # Sports
+        'Sports Movies': 'Sports',
+
+        # Other
+        'Classic Movies': 'Other',
+        'Cult Movies': 'Other',
+        'Independent Movies': 'Other',
+        'LGBTQ Movies': 'Other',
+        'Movies': 'Other',
+        'Spanish-Language TV Shows': 'Other'
+    }
+
+    df['genre'] = (df['listed_in'].str.split(',').str[0].str.strip().map(genre_mapping).fillna('Other').astype('category'))
 
     return df
