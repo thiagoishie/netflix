@@ -1,34 +1,98 @@
 # Netflix Data Analysis
 
-Projeto de análise exploratória do catálogo da Netflix utilizando Python e Pandas.
+Projeto de análise exploratória do catálogo da Netflix utilizando Python e Pandas, com foco em boas práticas de organização, pipeline de dados e geração de insights.
+
+---
 
 ## Objetivos
 
-* Realizar a extração e limpeza dos dados;
+* Realizar a extração, limpeza e transformação dos dados;
 * Aplicar boas práticas de organização de projetos de dados;
 * Desenvolver análises exploratórias sobre o catálogo da Netflix;
-* Gerar insights relacionados a filmes e séries disponíveis na plataforma.
+* Gerar insights relacionados a filmes e séries disponíveis na plataforma;
+* Construir um pipeline simples de ETL para separação entre dados brutos e processados.
 
-## Estrutura do projeto
+---
+
+## Estrutura do Projeto
 
 ```text
 netflix-analysis/
 │
 ├── data/
-│   └── netflix_titles.csv
+│   ├── raw/
+│   │   └── netflix_titles.csv
+│   │
+│   └── processed/
+│       ├── netflix.csv
+│       ├── netflix_directors.csv
+│       └── netflix_cast.csv
 │
 ├── notebooks/
-│   └── data_analytics.ipynb
+│   ├── etl.ipynb
+│   └── data_analysis.ipynb
 │
 ├── src/
 │   ├── extract.py
 │   ├── cleaning.py
-│   └── feature_engineering.py
+│   ├── feature_engineering.py
+│   └── load.py
 │
 ├── README.md
 │
 └── requirements.txt
 ```
+
+---
+
+## Fluxo do Pipeline
+
+```text
+Raw Data
+    ↓
+Extract
+    ↓
+Cleaning
+    ↓
+Feature Engineering
+    ↓
+Load
+    ↓
+Processed Data
+    ↓
+Exploratory Data Analysis
+```
+
+---
+
+## Responsabilidade de cada módulo
+
+| Módulo                   | Responsabilidade                                            |
+| ------------------------ | ----------------------------------------------------------- |
+| `extract.py`             | Leitura dos dados brutos (`data/raw`)                       |
+| `cleaning.py`            | Limpeza, tratamento de valores ausentes e padronização      |
+| `feature_engineering.py` | Criação de novas features e métricas                        |
+| `load.py`                | Orquestração do pipeline e geração dos datasets processados |
+| `etl.ipynb`              | Execução do processo de ETL para atualização dos dados      |
+| `data_analysis.ipynb`    | Análise exploratória e visualização dos dados               |
+
+---
+
+## Tecnologias Utilizadas
+
+* Python
+* Pandas
+* NumPy
+* Jupyter Notebook
+* Visual Studio Code
+
+---
+
+## Dataset
+
+O conjunto de dados utilizado contém informações sobre filmes e séries disponíveis na Netflix, incluindo classificação indicativa, duração, país de origem, elenco e data de inclusão no catálogo.
+
+---
 
 ## Principais etapas realizadas
 
@@ -37,166 +101,156 @@ netflix-analysis/
 * Correção de inconsistências na coluna `rating`;
 * Conversão de tipos de dados;
 * Padronização da coluna `duration`;
-* Preparação dos dados para análise exploratória.
-
-## Tecnologias utilizadas
-
-* Python
-* Pandas
-* NumPy
-* Jupyter Notebook
-* Visual Studio Code
-
-## Dataset
-
-O conjunto de dados utilizado contém informações sobre filmes e séries disponíveis na Netflix, incluindo classificação indicativa, duração, país de origem, elenco e data de inclusão no catálogo.
-
-## Próximos passos
-
-* Desenvolver novas variáveis por meio de feature engineering;
-* Realizar análises exploratórias e visualizações;
-* Investigar padrões relacionados a gêneros, classificações indicativas e evolução do catálogo ao longo do tempo.
-
-
-
-## Colunas e descrições do dataset
-
-| **Coluna**       | **Descrição**                                                                           |
-|------------------|-----------------------------------------------------------------------------------------|
-| show_id          | Identificador único da obra no catálogo                                                 |
-| type             | Tipo de título (por exemplo: Movie, TV Show)                                            |
-| title            | Nome do filme ou série                                                                  |
-| director         | Nome(s) do(s) diretor(es); pode conter múltiplos nomes separados por vírgula            |
-| cast             | Principais atores/atrizes; lista separada por vírgulas                                  |
-| country          | País(es) de produção ou origem; pode listar múltiplos países                            |
-| date_added       | Data em que a obra foi adicionada ao catálogo (formato: mês dia, ano)                   |
-| release_year     | Ano de lançamento original da obra                                                      |
-| rating           | Classificação indicativa (ex.: PG-13, TV-MA, etc.)                                      |
-| duration         | Duração do conteúdo (minutos para filmes; número de temporadas/episódios para séries)   |
-| listed_in        | Gêneros ou categorias (ex.: Comedies; Documentaries)                                    |
-| description      | Sinopse curta ou resumo do enredo                                                       |
-| language         | Idioma principal da obra (quando disponível)                                            |
-| production_company | Empresa(s) produtora(s) (quando disponível)                                           |
-| imdb_id          | Identificador na base externa IMDB (quando disponível)                                  |
-
-
-## Feature Engieneering
-
-### Rating
-
-| Rating       | Significado                   | Público                                                        |
-| ------------ | ----------------------------- | -------------------------------------------------------------- |
-| **TV-MA**    | Mature Audience Only          | Conteúdo adulto (17+)                                          |
-| **TV-14**    | Parents Strongly Cautioned    | Pode ser inadequado para menores de 14 anos                    |
-| **TV-PG**    | Parental Guidance Suggested   | Orientação dos pais recomendada                                |
-| **R**        | Restricted                    | Menores de 17 anos precisam de acompanhante adulto             |
-| **PG-13**    | Parents Strongly Cautioned    | Alguns conteúdos podem ser inadequados para menores de 13 anos |
-| **TV-Y7**    | Directed to Older Children    | Indicado para crianças a partir de 7 anos                      |
-| **TV-Y**     | All Children                  | Adequado para todas as crianças                                |
-| **PG**       | Parental Guidance Suggested   | Orientação dos pais sugerida                                   |
-| **TV-G**     | General Audience              | Adequado para todos os públicos                                |
-| **NR**       | Not Rated                     | Sem classificação oficial                                      |
-| **G**        | General Audiences             | Livre para todos os públicos                                   |
-| **UR**       | Unrated                       | Versão não classificada / classificação desconhecida           |
-| **TV-Y7-FV** | Fantasy Violence              | Crianças 7+, contém violência fantasiosa                       |
-| **NC-17**    | No Children Under 17 Admitted | Proibido para menores de 17 anos                               |
+* Criação de novas variáveis por meio de feature engineering;
+* Geração de datasets processados para análise.
 
 ---
 
-### Agrupamento por Público
+## Datasets Processados
 
-| Grupo       | Ratings                  |
-| ----------- | ------------------------ |
-| **Kids**    | TV-Y, TV-Y7, TV-Y7-FV, G |
-| **Family**  | TV-G, PG                 |
-| **Teen**    | TV-PG, TV-14, PG-13      |
-| **Adult**   | TV-MA, R, NC-17          |
-| **Unknown** | NR, UR                   |
+### `netflix.csv`
 
+Tabela principal contendo os títulos da Netflix enriquecidos com as features criadas durante o pipeline.
 
-## 🌍 Continentes e Países
+**Granularidade:** 1 linha = 1 título.
 
-| Continente | Países |
-|------------|---------|
-| **North America** | United States, Canada, Mexico |
-| **Central America** | Costa Rica, Cuba, Dominican Republic, El Salvador, Guatemala, Honduras, Jamaica, Nicaragua, Panama, Puerto Rico |
-| **South America** | Argentina, Bolivia, Brazil, Chile, Colombia, Ecuador, Paraguay, Peru, Uruguay, Venezuela |
-| **Europe** | Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Finland, France, Germany, Greece, Hungary, Iceland, Ireland, Italy, Liechtenstein, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Romania, Russia, Serbia, Slovakia, Slovenia, Spain, Sweden, Switzerland, Turkey, Ukraine, United Kingdom, Vatican City |
-| **Africa** | Algeria, Angola, Botswana, Burkina Faso, Cameroon, Congo, Egypt, Ethiopia, Ghana, Kenya, Malawi, Mauritius, Morocco, Namibia, Nigeria, Senegal, South Africa, Sudan, Tunisia, Uganda, Zimbabwe |
-| **Asia** | Afghanistan, Bangladesh, Cambodia, China, Hong Kong, India, Indonesia, Iran, Iraq, Israel, Japan, Jordan, Kazakhstan, Kuwait, Lebanon, Malaysia, Mongolia, Nepal, Pakistan, Philippines, Saudi Arabia, Singapore, South Korea, Sri Lanka, Syria, Taiwan, Thailand, United Arab Emirates, Vietnam |
-| **Oceania** | Australia, New Zealand |
-| **Unknown** | Unknown |
+---
 
-## 🗣️ Language Mapping
+### `netflix_directors.csv`
 
-| Language | Countries |
-|-----------|------------|
-| **English** | United States, Canada, Jamaica, Ireland, United Kingdom, Botswana, Ghana, Kenya, Malawi, Namibia, Nigeria, Singapore, South Africa, Uganda, Zimbabwe, Australia, New Zealand |
-| **Spanish** | Mexico, Costa Rica, Cuba, Dominican Republic, El Salvador, Guatemala, Honduras, Nicaragua, Panama, Puerto Rico, Argentina, Bolivia, Chile, Colombia, Ecuador, Paraguay, Peru, Uruguay, Venezuela, Spain |
-| **Portuguese** | Brazil, Portugal, Angola |
-| **French** | France, Belgium, Luxembourg, Burkina Faso, Cameroon, Congo, Mauritius, Senegal |
-| **German** | Austria, Germany, Switzerland |
-| **Arabic** | Algeria, Egypt, Morocco, Sudan, Tunisia, Iraq, Jordan, Kuwait, Lebanon, Saudi Arabia, Syria, United Arab Emirates |
-| **Mandarin** | China, Taiwan |
-| **Dutch** | Netherlands |
-| **Bulgarian** | Bulgaria |
-| **Croatian** | Croatia |
-| **Greek** | Cyprus, Greece |
-| **Czech** | Czech Republic |
-| **Danish** | Denmark |
-| **Finnish** | Finland |
-| **Hungarian** | Hungary |
-| **Icelandic** | Iceland |
-| **Italian** | Italy |
-| **Norwegian** | Norway |
-| **Polish** | Poland |
-| **Romanian** | Romania |
-| **Russian** | Russia |
-| **Serbian** | Serbia |
-| **Slovak** | Slovakia |
-| **Slovene** | Slovenia |
-| **Swedish** | Sweden |
-| **Turkish** | Turkey |
-| **Ukrainian** | Ukraine |
-| **Amharic** | Ethiopia |
-| **Dari** | Afghanistan |
-| **Bengali** | Bangladesh |
-| **Khmer** | Cambodia |
-| **Cantonese** | Hong Kong |
-| **Hindi** | India |
-| **Indonesian** | Indonesia |
-| **Persian** | Iran |
-| **Hebrew** | Israel |
-| **Japanese** | Japan |
-| **Kazakh** | Kazakhstan |
-| **Malay** | Malaysia |
-| **Mongolian** | Mongolia |
-| **Nepali** | Nepal |
-| **Urdu** | Pakistan |
-| **Filipino** | Philippines |
-| **Korean** | South Korea |
-| **Sinhala** | Sri Lanka |
-| **Thai** | Thailand |
-| **Vietnamese** | Vietnam |
-| **Unknown** | Unknown |
+Tabela relacional entre títulos e diretores.
 
-## 🎭 Genre Mapping
+**Granularidade:** 1 linha = 1 diretor por título.
 
-| Final Genre | Original Genres |
-|-------------|-----------------|
-| **Drama** | Dramas, TV Dramas |
-| **Comedy** | Comedies, TV Comedies, Stand-Up Comedy, Stand-Up Comedy & Talk Shows |
-| **Action & Adventure** | Action & Adventure, TV Action & Adventure |
-| **Documentary** | Documentaries, Docuseries |
-| **Horror** | Horror Movies, TV Horror |
-| **Crime** | Crime TV Shows, Thrillers |
-| **International** | International Movies, International TV Shows |
-| **Family** | Children & Family Movies, Kids' TV |
-| **TV Shows** | British TV Shows, Classic & Cult TV |
-| **Reality** | Reality TV |
-| **Romance** | Romantic Movies, Romantic TV Shows |
-| **Anime** | Anime Features, Anime Series |
-| **Sci-Fi & Fantasy** | Sci-Fi & Fantasy, TV Sci-Fi & Fantasy |
-| **Music** | Music & Musicals |
-| **Sports** | Sports Movies |
-| **Other** | Classic Movies, Cult Movies, Independent Movies, LGBTQ Movies, Movies, Spanish-Language TV Shows |
+Exemplo:
+
+| title   | director   |
+| ------- | ---------- |
+| Movie A | Director 1 |
+| Movie A | Director 2 |
+| Movie B | Director 3 |
+
+---
+
+### `netflix_cast.csv`
+
+Tabela relacional entre títulos e membros do elenco.
+
+**Granularidade:** 1 linha = 1 ator/atriz por título.
+
+Exemplo:
+
+| title   | cast    |
+| ------- | ------- |
+| Movie A | Actor 1 |
+| Movie A | Actor 2 |
+| Movie B | Actor 3 |
+
+---
+
+## Colunas do Dataset Original
+
+| Coluna       | Descrição                                 |
+| ------------ | ----------------------------------------- |
+| show_id      | Identificador único da obra               |
+| type         | Tipo do conteúdo (Movie ou TV Show)       |
+| title        | Nome do filme ou série                    |
+| director     | Diretor(es) associados ao título          |
+| cast         | Principais atores e atrizes               |
+| country      | País(es) de produção                      |
+| date_added   | Data de inclusão no catálogo              |
+| release_year | Ano de lançamento                         |
+| rating       | Classificação indicativa                  |
+| duration     | Duração do conteúdo                       |
+| listed_in    | Gêneros originais fornecidos pelo dataset |
+| description  | Sinopse da obra                           |
+
+---
+
+## Feature Engineering
+
+### Rating Group
+
+| Grupo   | Ratings                  |
+| ------- | ------------------------ |
+| Kids    | TV-Y, TV-Y7, TV-Y7-FV, G |
+| Family  | TV-G, PG                 |
+| Teen    | TV-PG, TV-14, PG-13      |
+| Adult   | TV-MA, R, NC-17          |
+| Unknown | NR, UR                   |
+
+---
+
+### Release Decade
+
+Agrupamento do ano de lançamento em décadas.
+
+**Exemplo:**
+
+| release_year | release_decade |
+| ------------ | -------------- |
+| 1994         | 1990           |
+| 2001         | 2000           |
+| 2019         | 2010           |
+
+---
+
+### Duration Category
+
+#### Movies
+
+| Categoria          | Critério              |
+| ------------------ | --------------------- |
+| Short Film         | até 40 minutos        |
+| Medium-length Film | entre 41 e 70 minutos |
+| Feature Film       | acima de 70 minutos   |
+
+#### TV Shows
+
+| Categoria           | Critério             |
+| ------------------- | -------------------- |
+| Limited Series      | 1 temporada          |
+| Short Series        | 2 a 3 temporadas     |
+| Long-running Series | 4 ou mais temporadas |
+
+---
+
+### Additional Features
+
+| Feature          | Descrição                                         |
+| ---------------- | ------------------------------------------------- |
+| `main_country`   | Principal país associado ao título                |
+| `continent`      | Continente do país principal                      |
+| `language`       | Idioma inferido a partir do país principal        |
+| `year_added`     | Ano em que o título foi adicionado à Netflix      |
+| `delay_added`    | Diferença entre lançamento e inclusão no catálogo |
+| `genre`          | Gênero padronizado                                |
+| `n_countries`    | Quantidade de países associados ao título         |
+| `n_genres`       | Quantidade de gêneros originais                   |
+| `n_cast_members` | Número de membros do elenco                       |
+| `n_directors`    | Número de diretores associados                    |
+
+---
+
+## Perguntas de Negócio
+
+Algumas questões que podem ser exploradas com os dados processados:
+
+* Como o catálogo da Netflix evoluiu ao longo das décadas?
+* Quais são os gêneros mais frequentes?
+* Filmes ou séries predominam na plataforma?
+* Qual o perfil etário predominante do catálogo?
+* Quais países possuem maior representatividade?
+* Quem são os diretores mais presentes no catálogo?
+* Quais atores aparecem com maior frequência?
+* Existem diferenças entre filmes e séries em relação à duração?
+
+---
+
+## Próximos Passos
+
+* Desenvolver visualizações interativas;
+* Construir dashboards em Power BI ou Streamlit;
+* Adicionar testes unitários para as funções do pipeline;
+* Automatizar a execução do ETL;
+* Expandir as análises relacionais utilizando as tabelas auxiliares de diretores e elenco.

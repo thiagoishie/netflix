@@ -420,3 +420,125 @@ def create_genre(df: pd.DataFrame) -> pd.DataFrame:
     df['genre'] = (df['listed_in'].str.split(',').str[0].str.strip().map(genre_mapping).fillna('Other').astype('category'))
 
     return df
+
+def create_release_decade(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Cria a década de lançamento do título.
+    Ex.: 1994 -> 1990
+    """
+
+    df = df.copy()
+
+    df['release_decade'] = (
+        (df['release_year'] // 10 * 10)
+        .astype('Int64')
+    )
+
+    return df
+
+def create_duration_category(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Classifica a duração de acordo com o tipo do título.
+
+    Movies:
+        - Short Film: até 40 min
+        - Medium-length Film: 41 a 70 min
+        - Feature Film: acima de 70 min
+
+    TV Shows:
+        - Limited Series: 1 temporada
+        - Short Series: 2 a 3 temporadas
+        - Long-running Series: 4 ou mais temporadas
+    """
+
+    df = df.copy()
+
+    df['duration_category'] = 'Unknown'
+
+    movie_mask = df['type'] == 'Movie'
+    tv_mask = df['type'] == 'TV Show'
+
+    df.loc[movie_mask & (df['duration'] <= 40), 'duration_category'] = 'Short Film'
+    df.loc[movie_mask & df['duration'].between(41, 70), 'duration_category'] = 'Medium-length Film'
+    df.loc[movie_mask & (df['duration'] > 70), 'duration_category'] = 'Feature Film'
+
+    df.loc[tv_mask & (df['duration'] == 1), 'duration_category'] = 'Limited Series'
+    df.loc[tv_mask & df['duration'].between(2, 3), 'duration_category'] = 'Short Series'
+    df.loc[tv_mask & (df['duration'] >= 4), 'duration_category'] = 'Long-running Series'
+
+    df['duration_category'] = df['duration_category'].astype('category')
+
+    return df
+
+def create_n_countries(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Conta o número de países associados à produção do título.
+    """
+
+    df = df.copy()
+
+    df['n_countries'] = (
+        df['country']
+        .replace('Unknown', pd.NA)
+        .str.split(',')
+        .str.len()
+        .fillna(0)
+        .astype(int)
+    )
+
+    return df
+
+
+def create_n_genres(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Conta o número de gêneros associados ao título.
+    """
+
+    df = df.copy()
+
+    df['n_genres'] = (
+        df['listed_in']
+        .str.split(',')
+        .str.len()
+        .astype(int)
+    )
+
+    return df
+
+
+def create_n_cast_members(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Conta o número de membros do elenco informados.
+    """
+
+    df = df.copy()
+
+    df['n_cast_members'] = (
+        df['cast']
+        .replace('Not Informed', pd.NA)
+        .str.split(',')
+        .str.len()
+        .fillna(0)
+        .astype(int)
+    )
+
+    return df
+
+
+def create_n_directors(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Conta o número de diretores informados.
+    """
+
+    df = df.copy()
+
+    df['n_directors'] = (
+        df['director']
+        .replace('Not Informed', pd.NA)
+        .str.split(',')
+        .str.len()
+        .fillna(0)
+        .astype(int)
+    )
+
+    return df
