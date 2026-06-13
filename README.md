@@ -1,16 +1,21 @@
 # Netflix Data Analysis
 
-Projeto de análise exploratória do catálogo da Netflix utilizando Python e Pandas, com foco em boas práticas de organização, pipeline de dados e geração de insights.
+Projeto de Ciência de Dados aplicado ao catálogo da Netflix, desenvolvido com foco em **engenharia de dados, análise exploratória, estatística, aprendizado de máquina e análise de redes**.
+
+O projeto utiliza um pipeline modular de ETL para transformar dados brutos em datasets analíticos capazes de sustentar investigações progressivamente mais sofisticadas.
 
 ---
 
 ## Objetivos
 
-* Realizar a extração, limpeza e transformação dos dados;
+* Construir um pipeline completo de ETL utilizando Python;
 * Aplicar boas práticas de organização de projetos de dados;
-* Desenvolver análises exploratórias sobre o catálogo da Netflix;
-* Gerar insights relacionados a filmes e séries disponíveis na plataforma;
-* Construir um pipeline simples de ETL para separação entre dados brutos e processados.
+* Realizar análises exploratórias para compreender a composição do catálogo;
+* Desenvolver features analíticas para suportar estudos mais avançados;
+* Investigar padrões temporais relacionados à expansão do catálogo;
+* Validar hipóteses estatísticas relevantes;
+* Aplicar técnicas de Machine Learning não supervisionado;
+* Explorar relações entre atores e diretores utilizando Social Network Analysis.
 
 ---
 
@@ -39,13 +44,13 @@ netflix-analysis/
 │   └── load.py
 │
 ├── README.md
-│
+├── Future Projects
 └── requirements.txt
 ```
 
 ---
 
-## Fluxo do Pipeline
+## Fluxo do Projeto
 
 ```text
 Raw Data
@@ -60,21 +65,217 @@ Load
     ↓
 Processed Data
     ↓
-Exploratory Data Analysis
+Exploratory Data Analysis (EDA)
+    ↓
+Hypothesis Testing
+    ↓
+Time Series Analysis
+    ↓
+Machine Learning (Clustering)
+    ↓
+Social Network Analysis (SNA)
 ```
 
 ---
 
-## Responsabilidade de cada módulo
+## Pipeline ETL
 
-| Módulo                   | Responsabilidade                                            |
-| ------------------------ | ----------------------------------------------------------- |
-| `extract.py`             | Leitura dos dados brutos (`data/raw`)                       |
-| `cleaning.py`            | Limpeza, tratamento de valores ausentes e padronização      |
-| `feature_engineering.py` | Criação de novas features e métricas                        |
-| `load.py`                | Orquestração do pipeline e geração dos datasets processados |
-| `etl.ipynb`              | Execução do processo de ETL para atualização dos dados      |
-| `data_analysis.ipynb`    | Análise exploratória e visualização dos dados               |
+O pipeline foi desenvolvido de forma modular, permitindo reutilização de código e expansão futura do projeto.
+
+### Responsabilidade de cada módulo
+
+| Módulo                   | Responsabilidade                                       |
+| ------------------------ | ------------------------------------------------------ |
+| `extract.py`             | Leitura dos dados brutos                               |
+| `cleaning.py`            | Limpeza e tratamento dos dados                         |
+| `feature_engineering.py` | Criação de variáveis derivadas                         |
+| `load.py`                | Orquestração do pipeline e geração dos datasets finais |
+| `etl.ipynb`              | Execução e validação do processo de ETL                |
+| `data_analysis.ipynb`    | Desenvolvimento das análises exploratórias             |
+
+---
+
+## Datasets Gerados
+
+### `netflix.csv`
+
+Dataset analítico principal enriquecido com as features desenvolvidas durante o ETL.
+
+**Granularidade:** 1 linha = 1 título.
+
+---
+
+### `netflix_directors.csv`
+
+Tabela relacional contendo a associação entre títulos e diretores.
+
+**Granularidade:** 1 linha = 1 diretor por título.
+
+---
+
+### `netflix_cast.csv`
+
+Tabela relacional contendo a associação entre títulos e atores.
+
+**Granularidade:** 1 linha = 1 ator por título.
+
+---
+
+## Feature Engineering
+
+Durante o processo de transformação foram desenvolvidas diversas variáveis analíticas.
+
+### Perfil do conteúdo
+
+* `rating_group`
+* `duration_category`
+* `genre`
+* `release_decade`
+
+---
+
+### Informações geográficas
+
+* `main_country`
+* `continent`
+* `language`
+* `n_countries`
+
+---
+
+### Informações temporais
+
+* `year_added`
+* `delay_added`
+
+---
+
+### Complexidade do conteúdo
+
+* `n_cast_members`
+* `n_directors`
+* `n_genres`
+
+---
+
+## Exploratory Data Analysis (EDA)
+
+A análise exploratória representa o núcleo inicial do projeto e tem como objetivo compreender a composição e as características do catálogo da Netflix.
+
+### Questões investigadas
+
+* O catálogo é composto majoritariamente por filmes ou séries?
+* Como o catálogo evoluiu ao longo do tempo?
+* Quais países contribuem mais para o catálogo?
+* Quais gêneros predominam?
+* O catálogo é formado principalmente por conteúdos recentes ou antigos?
+* Filmes e séries apresentam diferenças relevantes em duração?
+* Qual é o perfil etário predominante do catálogo?
+* Quem são os atores e diretores mais recorrentes?
+
+### Técnicas utilizadas
+
+* Estatísticas descritivas;
+* Distribuições univariadas;
+* Análises bivariadas;
+* Visualizações interativas utilizando Plotly;
+* Comparações entre grupos.
+
+---
+
+## Future Engineering
+
+O projeto foi estruturado para evoluir gradualmente, incorporando técnicas cada vez mais sofisticadas de Ciência de Dados utilizando os datasets gerados pelo ETL.
+
+---
+
+### 1. Testes de Hipótese
+
+**Objetivo:** validar estatisticamente padrões identificados durante a EDA.
+
+Possíveis investigações:
+
+* Filmes demoram mais para entrar na Netflix do que séries?
+* Séries possuem elencos maiores?
+* A estratégia de aquisição mudou após 2020?
+
+Técnicas:
+
+* Mann–Whitney U;
+* Kruskal–Wallis;
+* Testes t;
+* Medidas de tamanho de efeito.
+
+---
+
+### 2. Séries Temporais
+
+**Objetivo:** compreender a evolução do catálogo ao longo do tempo.
+
+Possíveis investigações:
+
+* Como o catálogo cresceu ao longo dos anos?
+* Houve períodos de aceleração ou desaceleração?
+* Existem padrões sazonais na adição de conteúdos?
+* Filmes e séries apresentam comportamentos temporais distintos?
+
+Técnicas:
+
+* Médias móveis;
+* Decomposição temporal;
+* Análise de tendência;
+* Análise de sazonalidade;
+* Detecção de outliers.
+
+---
+
+### 3. Machine Learning — Clusterização
+
+**Objetivo:** identificar perfis naturais de conteúdos presentes na Netflix.
+
+Possíveis investigações:
+
+* Existem grupos distintos de títulos?
+* Quais características definem cada segmento do catálogo?
+
+Técnicas:
+
+* K-Means;
+* PCA;
+* Silhouette Score;
+* Método do Cotovelo.
+
+---
+
+### 4. Social Network Analysis (SNA)
+
+**Objetivo:** explorar as relações existentes entre profissionais presentes no catálogo.
+
+Possíveis investigações:
+
+* Quais atores ocupam posições estratégicas na rede?
+* Existem comunidades bem definidas de colaboração?
+* Quais diretores apresentam maior diversidade de parcerias?
+
+Técnicas:
+
+* NetworkX;
+* Degree Centrality;
+* Betweenness Centrality;
+* Eigenvector Centrality;
+* Community Detection.
+
+---
+
+### 5. Dashboards Interativos
+
+**Objetivo:** transformar os resultados analíticos em ferramentas acessíveis para comunicação e apoio à tomada de decisão.
+
+Possíveis implementações:
+
+* Streamlit;
+* Power BI;
+* Plotly Dash.
 
 ---
 
@@ -83,174 +284,77 @@ Exploratory Data Analysis
 * Python
 * Pandas
 * NumPy
+* Plotly
 * Jupyter Notebook
 * Visual Studio Code
 
 ---
 
-## Dataset
+## Conjunto de Dados
 
-O conjunto de dados utilizado contém informações sobre filmes e séries disponíveis na Netflix, incluindo classificação indicativa, duração, país de origem, elenco e data de inclusão no catálogo.
+O dataset utilizado contém informações sobre filmes e séries disponíveis na Netflix, incluindo:
 
----
-
-## Principais etapas realizadas
-
-* Remoção de colunas sem relevância analítica;
-* Tratamento de valores ausentes;
-* Correção de inconsistências na coluna `rating`;
-* Conversão de tipos de dados;
-* Padronização da coluna `duration`;
-* Criação de novas variáveis por meio de feature engineering;
-* Geração de datasets processados para análise.
-
----
-
-## Datasets Processados
-
-### `netflix.csv`
-
-Tabela principal contendo os títulos da Netflix enriquecidos com as features criadas durante o pipeline.
-
-**Granularidade:** 1 linha = 1 título.
+* tipo do conteúdo;
+* elenco;
+* direção;
+* país de origem;
+* data de inclusão no catálogo;
+* ano de lançamento;
+* classificação indicativa;
+* duração;
+* gêneros;
+* descrição.
 
 ---
 
-### `netflix_directors.csv`
+## Narrativa Analítica do Projeto
 
-Tabela relacional entre títulos e diretores.
-
-**Granularidade:** 1 linha = 1 diretor por título.
-
-Exemplo:
-
-| title   | director   |
-| ------- | ---------- |
-| Movie A | Director 1 |
-| Movie A | Director 2 |
-| Movie B | Director 3 |
-
----
-
-### `netflix_cast.csv`
-
-Tabela relacional entre títulos e membros do elenco.
-
-**Granularidade:** 1 linha = 1 ator/atriz por título.
-
-Exemplo:
-
-| title   | cast    |
-| ------- | ------- |
-| Movie A | Actor 1 |
-| Movie A | Actor 2 |
-| Movie B | Actor 3 |
+```text
+O que existe no catálogo?
+            ↓
+Análise Exploratória (EDA)
+            ↓
+As diferenças observadas são estatisticamente relevantes?
+            ↓
+Testes de Hipótese
+            ↓
+Como o catálogo evoluiu ao longo do tempo?
+            ↓
+Séries Temporais
+            ↓
+Existem perfis naturais de conteúdo?
+            ↓
+Machine Learning (Clusterização)
+            ↓
+Como os profissionais do catálogo se relacionam?
+            ↓
+Social Network Analysis
+```
 
 ---
 
-## Colunas do Dataset Original
+## Status do Projeto
 
-| Coluna       | Descrição                                 |
-| ------------ | ----------------------------------------- |
-| show_id      | Identificador único da obra               |
-| type         | Tipo do conteúdo (Movie ou TV Show)       |
-| title        | Nome do filme ou série                    |
-| director     | Diretor(es) associados ao título          |
-| cast         | Principais atores e atrizes               |
-| country      | País(es) de produção                      |
-| date_added   | Data de inclusão no catálogo              |
-| release_year | Ano de lançamento                         |
-| rating       | Classificação indicativa                  |
-| duration     | Duração do conteúdo                       |
-| listed_in    | Gêneros originais fornecidos pelo dataset |
-| description  | Sinopse da obra                           |
+### Concluído
 
----
+* [x] Estruturação do projeto;
+* [x] Pipeline completo de ETL;
+* [x] Limpeza e padronização dos dados;
+* [x] Desenvolvimento das features analíticas;
+* [x] Geração dos datasets processados;
+* [x] Início da Análise Exploratória de Dados (EDA).
 
-## Feature Engineering
+### Planejado
 
-### Rating Group
-
-| Grupo   | Ratings                  |
-| ------- | ------------------------ |
-| Kids    | TV-Y, TV-Y7, TV-Y7-FV, G |
-| Family  | TV-G, PG                 |
-| Teen    | TV-PG, TV-14, PG-13      |
-| Adult   | TV-MA, R, NC-17          |
-| Unknown | NR, UR                   |
+* [ ] Conclusão da EDA;
+* [ ] Testes de hipótese;
+* [ ] Séries temporais;
+* [ ] Clusterização;
+* [ ] Social Network Analysis;
+* [ ] Dashboards interativos.
 
 ---
 
-### Release Decade
+## Licença
 
-Agrupamento do ano de lançamento em décadas.
-
-**Exemplo:**
-
-| release_year | release_decade |
-| ------------ | -------------- |
-| 1994         | 1990           |
-| 2001         | 2000           |
-| 2019         | 2010           |
-
----
-
-### Duration Category
-
-#### Movies
-
-| Categoria          | Critério              |
-| ------------------ | --------------------- |
-| Short Film         | até 40 minutos        |
-| Medium-length Film | entre 41 e 70 minutos |
-| Feature Film       | acima de 70 minutos   |
-
-#### TV Shows
-
-| Categoria           | Critério             |
-| ------------------- | -------------------- |
-| Limited Series      | 1 temporada          |
-| Short Series        | 2 a 3 temporadas     |
-| Long-running Series | 4 ou mais temporadas |
-
----
-
-### Additional Features
-
-| Feature          | Descrição                                         |
-| ---------------- | ------------------------------------------------- |
-| `main_country`   | Principal país associado ao título                |
-| `continent`      | Continente do país principal                      |
-| `language`       | Idioma inferido a partir do país principal        |
-| `year_added`     | Ano em que o título foi adicionado à Netflix      |
-| `delay_added`    | Diferença entre lançamento e inclusão no catálogo |
-| `genre`          | Gênero padronizado                                |
-| `n_countries`    | Quantidade de países associados ao título         |
-| `n_genres`       | Quantidade de gêneros originais                   |
-| `n_cast_members` | Número de membros do elenco                       |
-| `n_directors`    | Número de diretores associados                    |
-
----
-
-## Perguntas de Negócio
-
-Algumas questões que podem ser exploradas com os dados processados:
-
-* Como o catálogo da Netflix evoluiu ao longo das décadas?
-* Quais são os gêneros mais frequentes?
-* Filmes ou séries predominam na plataforma?
-* Qual o perfil etário predominante do catálogo?
-* Quais países possuem maior representatividade?
-* Quem são os diretores mais presentes no catálogo?
-* Quais atores aparecem com maior frequência?
-* Existem diferenças entre filmes e séries em relação à duração?
-
----
-
-## Próximos Passos
-
-* Desenvolver visualizações interativas;
-* Construir dashboards em Power BI ou Streamlit;
-* Adicionar testes unitários para as funções do pipeline;
-* Automatizar a execução do ETL;
-* Expandir as análises relacionais utilizando as tabelas auxiliares de diretores e elenco.
+Este projeto foi desenvolvido para fins educacionais e de construção de portfólio em Ciência de Dados.
