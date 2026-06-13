@@ -331,11 +331,13 @@ def create_date_features(df: pd.DataFrame) -> pd.DataFrame:
 
     df = df.copy()
 
-    # ano em que o título foi adicionado à Netflix
-    df['year_added'] = (df['date_added'].dt.year.astype('Int64'))
+    df['date_added'] = pd.to_datetime(df['date_added'], errors='coerce')
 
-    # tempo (em anos) entre lançamento e entrada no catálogo
-    df['delay_added'] = (df['year_added']- df['release_year']).astype('Int64')
+    df['year_added'] = df['date_added'].dt.year.astype('Int64')
+
+    df['release_year_adj'] = df['release_year'].where(df['release_year'] <= df['year_added'], df['year_added'])
+
+    df['delay_added'] = (df['year_added'] - df['release_year_adj']).astype('Int64')
 
     return df
 
