@@ -33,13 +33,17 @@ def create_rating_group(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def create_main_country(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Extrai o primeiro país informado na coluna country.
-    """
 
     df = df.copy()
 
-    df['main_country'] = (df['country'].str.split(',').str[0].str.strip().astype('category'))
+    df['main_country'] = (
+        df['country']
+        .str.lstrip(', ')
+        .str.split(',')
+        .str[0]
+        .str.strip()
+        .astype('category')
+    )
 
     return df
 
@@ -327,17 +331,33 @@ def create_language(df: pd.DataFrame) -> pd.DataFrame:
 def create_date_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     Cria variáveis derivadas da data de adição ao catálogo.
+
+    Os 10 valores ausentes de date_added são preenchidos
+    manualmente com base em pesquisas secundárias.
     """
 
     df = df.copy()
 
-    df['date_added'] = pd.to_datetime(df['date_added'], errors='coerce')
+    date_added_mapping = {
+        "A Young Doctor's Notebook and Other Stories": "2016-12-09",
+        "Anthony Bourdain: Parts Unknown": "2014-12-01",
+        "Frasier": "2020-12-30",
+        "Friends": "2015-01-01",
+        "Gunslinger Girl": "2013-03-08",
+        "Kikoriki": "2015-11-01",
+        "La Familia P. Luche": "2016-07-19",
+        "Maron": "2013-08-14",
+        "Red vs. Blue": "2014-04-01",
+        "The Adventures of Figaro Pho": "2015-02-15"
+    }
 
-    df['year_added'] = df['date_added'].dt.year.astype('Int64')
+    df['date_added'] = (df['date_added'].fillna(df['title'].map(date_added_mapping)))
 
-    df['release_year_adj'] = df['release_year'].where(df['release_year'] <= df['year_added'], df['year_added'])
+    df['date_added'] = pd.to_datetime(df['date_added'],errors='coerce')
 
-    df['delay_added'] = (df['year_added'] - df['release_year_adj']).astype('Int64')
+    df['year_added'] = (df['date_added'].dt.year.astype('Int64'))
+
+    df['delay_added'] = (df['year_added'] - df['release_year']).where(lambda x: x >= 0,0).astype('Int64')
 
     return df
 
