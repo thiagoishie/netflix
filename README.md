@@ -1,4 +1,14 @@
-![image-3.png](attachment:image-3.png)
+<p align="center">
+  <img src="image/netflix_logo.png" width="500">
+</p>
+
+<h1 align="center">
+Netflix Content Analytics
+</h1>
+
+<p align="center">
+Projeto de Data Science utilizando o catálogo da Netflix para análises exploratórias, testes de hipóteses, séries temporais e clustering.
+</p>
 
 # Netflix Data Analysis
 
