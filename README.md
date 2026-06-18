@@ -7,7 +7,10 @@ Netflix Content Analytics
 </h1>
 
 <p align="center">
-Projeto de Data Science utilizando o catálogo da Netflix para análises exploratórias, testes de hipóteses, séries temporais e clustering.
+📊 Análise Exploratória de Dados (EDA)<br>
+🧪 Testes de Hipóteses <br>
+📈 Análise de Séries Temporais<br>
+🎯 Clustering e Segmentação de Conteúdo
 </p>
 
 # Netflix Data Analysis
