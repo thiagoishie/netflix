@@ -1,25 +1,39 @@
 # Netflix Data Analysis
 
-Projeto de Ciência de Dados aplicado ao catálogo da Netflix, desenvolvido com foco em **engenharia de dados, análise exploratória, estatística, aprendizado de máquina e análise de redes**.
+Projeto de Ciência de Dados aplicado ao catálogo da Netflix, desenvolvido com foco em **engenharia de dados, análise exploratória, estatística, aprendizado de máquina e análise de redes sociais**.
 
 O projeto utiliza um pipeline modular de ETL para transformar dados brutos em datasets analíticos capazes de sustentar investigações progressivamente mais sofisticadas.
 
 ---
 
-## Objetivos
+## 📌 Objetivos do Projeto
 
-* Construir um pipeline completo de ETL utilizando Python;
-* Aplicar boas práticas de organização de projetos de dados;
-* Realizar análises exploratórias para compreender a composição do catálogo;
-* Desenvolver features analíticas para suportar estudos mais avançados;
-* Investigar padrões temporais relacionados à expansão do catálogo;
-* Validar hipóteses estatísticas relevantes;
-* Aplicar técnicas de Machine Learning não supervisionado;
-* Explorar relações entre atores e diretores utilizando Social Network Analysis.
+- Construir um pipeline completo de ETL utilizando Python;
+- Aplicar boas práticas de organização de projetos de dados;
+- Realizar análises exploratórias para compreender a composição do catálogo da Netflix;
+- Desenvolver features analíticas para suportar estudos mais avançados;
+- Investigar padrões temporais relacionados à expansão do catálogo;
+- Validar hipóteses estatísticas relevantes;
+- Aplicar técnicas de Machine Learning não supervisionado;
+- Explorar relações entre atores e diretores utilizando Social Network Analysis (SNA).
 
 ---
 
-## Estrutura do Projeto
+## 🛠️ Tecnologias Utilizadas
+
+- Python
+- Pandas
+- NumPy
+- SciPy
+- Scikit-Learn
+- Plotly
+- NetworkX
+- Jupyter Notebook
+- Git e GitHub
+
+---
+
+## 📂 Estrutura do Projeto
 
 ```text
 netflix-analysis/
@@ -34,8 +48,9 @@ netflix-analysis/
 │       └── netflix_cast.csv
 │
 ├── notebooks/
-│   ├── etl.ipynb
-│   └── data_analysis.ipynb
+│   ├── ETL_EDA.ipynb
+│   ├── Hypothesis_Test.ipynb
+│   └── TimeSeries.ipynb
 │
 ├── src/
 │   ├── extract.py
@@ -44,54 +59,51 @@ netflix-analysis/
 │   └── load.py
 │
 ├── README.md
-├── Future Projects
 └── requirements.txt
 ```
 
 ---
 
-## Fluxo do Projeto
+## 🔄 Fluxo do Projeto
 
 ```text
-Raw Data
-    ↓
+Dados Brutos
+      ↓
 Extract
-    ↓
+      ↓
 Cleaning
-    ↓
+      ↓
 Feature Engineering
-    ↓
+      ↓
 Load
-    ↓
-Processed Data
-    ↓
-Exploratory Data Analysis (EDA)
-    ↓
-Hypothesis Testing
-    ↓
-Time Series Analysis
-    ↓
-Machine Learning (Clustering)
-    ↓
+      ↓
+Dados Processados
+      ↓
+Análise Exploratória (EDA)
+      ↓
+Testes de Hipótese
+      ↓
+Séries Temporais
+      ↓
+Machine Learning (Clusterização)
+      ↓
 Social Network Analysis (SNA)
 ```
 
 ---
 
-## Pipeline ETL
+# ⚙️ Pipeline ETL
 
 O pipeline foi desenvolvido de forma modular, permitindo reutilização de código e expansão futura do projeto.
 
-### Responsabilidade de cada módulo
+## Responsabilidade de cada módulo
 
-| Módulo                   | Responsabilidade                                       |
-| ------------------------ | ------------------------------------------------------ |
-| `extract.py`             | Leitura dos dados brutos                               |
-| `cleaning.py`            | Limpeza e tratamento dos dados                         |
-| `feature_engineering.py` | Criação de variáveis derivadas                         |
-| `load.py`                | Orquestração do pipeline e geração dos datasets finais |
-| `etl.ipynb`              | Execução e validação do processo de ETL                |
-| `data_analysis.ipynb`    | Desenvolvimento das análises exploratórias             |
+| Módulo | Responsabilidade |
+|---------|------------------|
+| `extract.py` | Leitura dos dados brutos |
+| `cleaning.py` | Limpeza e tratamento dos dados |
+| `feature_engineering.py` | Criação de variáveis derivadas |
+| `load.py` | Orquestração do pipeline e geração dos datasets finais |
 
 ---
 
@@ -121,240 +133,248 @@ Tabela relacional contendo a associação entre títulos e atores.
 
 ---
 
-## Feature Engineering
+# 🧠 Engenharia de Features
 
 Durante o processo de transformação foram desenvolvidas diversas variáveis analíticas.
 
-### Perfil do conteúdo
+## Perfil do conteúdo
 
-* `rating_group`
-* `duration_category`
-* `genre`
-* `release_decade`
+- `rating_group`
+- `duration_category`
+- `genre`
+- `release_decade`
 
----
+## Informações geográficas
 
-### Informações geográficas
+- `main_country`
+- `continent`
+- `language`
+- `n_countries`
 
-* `main_country`
-* `continent`
-* `language`
-* `n_countries`
+## Informações temporais
 
----
+- `year_added`
+- `delay_added`
 
-### Informações temporais
+## Complexidade do conteúdo
 
-* `year_added`
-* `delay_added`
-
----
-
-### Complexidade do conteúdo
-
-* `n_cast_members`
-* `n_directors`
-* `n_genres`
+- `n_cast_members`
+- `n_directors`
+- `n_genres`
 
 ---
 
-## Exploratory Data Analysis (EDA)
+# 📊 Análise Exploratória de Dados (EDA)
 
-A análise exploratória representa o núcleo inicial do projeto e tem como objetivo compreender a composição e as características do catálogo da Netflix.
+A EDA representa a etapa inicial da investigação e tem como objetivo compreender a composição e as características do catálogo da Netflix.
 
-### Questões investigadas
+## Questões investigadas
 
-* O catálogo é composto majoritariamente por filmes ou séries?
-* Como o catálogo evoluiu ao longo do tempo?
-* Quais países contribuem mais para o catálogo?
-* Quais gêneros predominam?
-* O catálogo é formado principalmente por conteúdos recentes ou antigos?
-* Filmes e séries apresentam diferenças relevantes em duração?
-* Qual é o perfil etário predominante do catálogo?
-* Quem são os atores e diretores mais recorrentes?
+- O catálogo é composto majoritariamente por filmes ou séries?
+- Como o catálogo cresceu ao longo do tempo?
+- Quais países contribuem mais para o catálogo?
+- Quais gêneros predominam?
+- O catálogo é formado principalmente por conteúdos recentes ou antigos?
+- Filmes e séries apresentam diferenças relevantes em duração?
+- Qual é o perfil etário predominante do catálogo?
+- Existem diferenças na composição do elenco entre filmes e séries?
 
-### Técnicas utilizadas
+## Técnicas utilizadas
 
-* Estatísticas descritivas;
-* Distribuições univariadas;
-* Análises bivariadas;
-* Visualizações interativas utilizando Plotly;
-* Comparações entre grupos.
-
----
-
-## Future Engineering
-
-O projeto foi estruturado para evoluir gradualmente, incorporando técnicas cada vez mais sofisticadas de Ciência de Dados utilizando os datasets gerados pelo ETL.
+- Estatísticas descritivas;
+- Análises univariadas;
+- Análises bivariadas;
+- Visualizações utilizando Plotly;
+- Comparações entre grupos.
 
 ---
 
-### 1. Testes de Hipótese
+# 🧪 Testes de Hipótese
 
-**Objetivo:** validar estatisticamente padrões identificados durante a EDA.
+## Objetivo
 
-Possíveis investigações:
+Validar estatisticamente padrões identificados durante a EDA.
 
-* Filmes demoram mais para entrar na Netflix do que séries?
-* Séries possuem elencos maiores?
-* A estratégia de aquisição mudou após 2020?
+## Hipóteses avaliadas
 
-Técnicas:
+- Séries são adicionadas à Netflix mais rapidamente do que filmes?
+- Filmes destinados a públicos diferentes apresentam durações distintas?
+- Séries possuem elencos maiores do que filmes?
+- A estratégia de aquisição da Netflix mudou após 2020?
 
-* Mann–Whitney U;
-* Kruskal–Wallis;
-* Testes t;
-* Medidas de tamanho de efeito.
+## Técnicas utilizadas
 
----
-
-### 2. Séries Temporais
-
-**Objetivo:** compreender a evolução do catálogo ao longo do tempo.
-
-Possíveis investigações:
-
-* Como o catálogo cresceu ao longo dos anos?
-* Houve períodos de aceleração ou desaceleração?
-* Existem padrões sazonais na adição de conteúdos?
-* Filmes e séries apresentam comportamentos temporais distintos?
-
-Técnicas:
-
-* Médias móveis;
-* Decomposição temporal;
-* Análise de tendência;
-* Análise de sazonalidade;
-* Detecção de outliers.
+- Mann–Whitney U;
+- ANOVA;
+- Kruskal–Wallis;
+- Medidas de tamanho de efeito.
 
 ---
 
-### 3. Machine Learning — Clusterização
+# 📈 Séries Temporais
 
-**Objetivo:** identificar perfis naturais de conteúdos presentes na Netflix.
+## Objetivo
 
-Possíveis investigações:
+Compreender a evolução do catálogo ao longo do tempo.
 
-* Existem grupos distintos de títulos?
-* Quais características definem cada segmento do catálogo?
+## Questões investigadas
 
-Técnicas:
+- O catálogo cresceu continuamente?
+- Houve aceleração ou desaceleração no ritmo de expansão?
+- Filmes e séries apresentam padrões temporais distintos?
+- Existem períodos anômalos que merecem investigação?
 
-* K-Means;
-* PCA;
-* Silhouette Score;
-* Método do Cotovelo.
+## Técnicas utilizadas
 
----
-
-### 4. Social Network Analysis (SNA)
-
-**Objetivo:** explorar as relações existentes entre profissionais presentes no catálogo.
-
-Possíveis investigações:
-
-* Quais atores ocupam posições estratégicas na rede?
-* Existem comunidades bem definidas de colaboração?
-* Quais diretores apresentam maior diversidade de parcerias?
-
-Técnicas:
-
-* NetworkX;
-* Degree Centrality;
-* Betweenness Centrality;
-* Eigenvector Centrality;
-* Community Detection.
+- Agregações semanais;
+- Médias móveis;
+- Análise de tendência;
+- Investigação de sazonalidade;
+- Detecção de anomalias.
 
 ---
 
-### 5. Dashboards Interativos
+# 🤖 Machine Learning — Clusterização
 
-**Objetivo:** transformar os resultados analíticos em ferramentas acessíveis para comunicação e apoio à tomada de decisão.
+## Objetivo
 
-Possíveis implementações:
+Identificar perfis naturais de conteúdos presentes na Netflix.
 
-* Streamlit;
-* Power BI;
-* Plotly Dash.
+## Variáveis utilizadas
+
+- `type`
+- `main_country`
+- `continent`
+- `release_year`
+- `delay_added`
+- `rating_group`
+- `duration_category`
+- `n_directors`
+- `n_cast_members`
+- `n_genres`
+
+## Técnicas utilizadas
+
+- StandardScaler;
+- One-Hot Encoding;
+- Método do Cotovelo;
+- Silhouette Score;
+- K-Means;
+- PCA.
 
 ---
 
-## Tecnologias Utilizadas
+# 🕸️ Social Network Analysis (SNA)
 
-* Python
-* Pandas
-* NumPy
-* Plotly
-* Jupyter Notebook
-* Visual Studio Code
+## Objetivo
+
+Explorar relações entre profissionais presentes no catálogo.
+
+## Rede principal
+
+### Rede de co-participação entre atores
+
+- **Nó:** ator;
+- **Aresta:** dois atores participaram do mesmo título.
+
+## Métricas avaliadas
+
+- Degree Centrality;
+- Betweenness Centrality;
+- Eigenvector Centrality;
+- Clustering Coefficient.
+
+## Questões investigadas
+
+- Quais atores ocupam posições estratégicas na rede?
+- Existem comunidades bem definidas?
+- Quais profissionais apresentam maior influência dentro do catálogo?
 
 ---
 
-## Conjunto de Dados
+# 📌 Status do Projeto
+
+## ✅ Concluído
+
+### Pipeline ETL
+
+- [x] Desenvolvimento do módulo de extração;
+- [x] Limpeza e padronização dos dados;
+- [x] Correção de inconsistências;
+- [x] Geração dos datasets processados;
+- [x] Construção das tabelas relacionais.
+
+### Engenharia de Features
+
+- [x] Variáveis de classificação indicativa;
+- [x] Variáveis geográficas;
+- [x] Variáveis temporais;
+- [x] Variáveis de duração;
+- [x] Métricas de complexidade.
+
+### Documentação
+
+- [x] Estruturação do repositório;
+- [x] Documentação do pipeline;
+- [x] Descrição dos datasets;
+- [x] Definição do roadmap analítico.
+
+### Análise
+
+- [x] Desenvolvimento da EDA inicial;
+- [x] Produção das primeiras visualizações;
+- [x] Levantamento de hipóteses de negócio.
+
+---
+
+## 🚧 Em andamento
+
+- [ ] Conclusão da EDA;
+- [ ] Testes de hipótese;
+- [ ] Séries temporais;
+- [ ] Refinamento da comunicação dos resultados.
+
+---
+
+## 📋 Próximas etapas
+
+- [ ] Clusterização dos conteúdos;
+- [ ] Social Network Analysis;
+- [ ] Rede bipartida ator–diretor;
+- [ ] Dashboard interativo;
+- [ ] Publicação da versão final do projeto.
+
+---
+
+# 📚 Conjunto de Dados
 
 O dataset utilizado contém informações sobre filmes e séries disponíveis na Netflix, incluindo:
 
-* tipo do conteúdo;
-* elenco;
-* direção;
-* país de origem;
-* data de inclusão no catálogo;
-* ano de lançamento;
-* classificação indicativa;
-* duração;
-* gêneros;
-* descrição.
+- tipo do conteúdo;
+- elenco;
+- direção;
+- país de origem;
+- data de inclusão no catálogo;
+- ano de lançamento;
+- classificação indicativa;
+- duração;
+- gêneros;
+- descrição.
+
+Fonte: Netflix Titles Dataset.
 
 ---
 
-## Narrativa Analítica do Projeto
+# 👨‍💻 Autor
 
-```text
-O que existe no catálogo?
-            ↓
-Análise Exploratória (EDA)
-            ↓
-As diferenças observadas são estatisticamente relevantes?
-            ↓
-Testes de Hipótese
-            ↓
-Como o catálogo evoluiu ao longo do tempo?
-            ↓
-Séries Temporais
-            ↓
-Existem perfis naturais de conteúdo?
-            ↓
-Machine Learning (Clusterização)
-            ↓
-Como os profissionais do catálogo se relacionam?
-            ↓
-Social Network Analysis
-```
+**Thiago**
+
+Analista de Dados Pleno no Itaú Unibanco, com formação em Economia pela UNIFESP e MBA em Data Science e Analytics pela ESALQ/USP.
+
+Atualmente, desenvolve projetos end-to-end em Ciência de Dados com foco em estatística aplicada, aprendizado de máquina e geração de insights para tomada de decisão baseada em dados.
 
 ---
 
-## Status do Projeto
+## 📄 Licença
 
-### Concluído
-
-* [x] Estruturação do projeto;
-* [x] Pipeline completo de ETL;
-* [x] Limpeza e padronização dos dados;
-* [x] Desenvolvimento das features analíticas;
-* [x] Geração dos datasets processados;
-* [x] Início da Análise Exploratória de Dados (EDA).
-
-### Planejado
-
-* [ ] Conclusão da EDA;
-* [ ] Testes de hipótese;
-* [ ] Séries temporais;
-* [ ] Clusterização;
-* [ ] Social Network Analysis;
-* [ ] Dashboards interativos.
-
----
-
-## Licença
-
-Este projeto foi desenvolvido para fins educacionais e de construção de portfólio em Ciência de Dados.
+Este projeto foi desenvolvido para fins educacionais, construção de portfólio e demonstração de competências em Ciência de Dados.
